@@ -2,6 +2,11 @@ from django.db import models
 
 class Category(models.Model):
     """ Category class """
+
+    class Meta:
+        """ Change name when model name is plural """
+        verbose_name_plural = 'Categories'
+
     name = models.CharField(max_length=254)
     friendly_name = models.CharField(max_length=254, null=True, blank=True)
 
