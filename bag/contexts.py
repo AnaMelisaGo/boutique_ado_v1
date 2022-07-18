@@ -1,8 +1,9 @@
 from decimal import Decimal
 from django.conf import settings
 
-def bag_contents(requests):
-    """ context processor to be accessible throughout 
+
+def bag_contents(request):
+    """ context processor to be accessible throughout
     the project """
     bag_items = []
     total = 0
