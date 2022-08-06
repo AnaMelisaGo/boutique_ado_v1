@@ -6,7 +6,7 @@ from products.models import Product
 
 def view_bag(request):
     """ A view that renders the shopping bag content page """
-
+    
     return render(request, 'bag/bag.html')
 
 
@@ -26,7 +26,7 @@ def add_to_bag(request, item_id):
             if size in bag[item_id]['items_by_size'].keys():
                 bag[item_id]['items_by_size'][size] += quantity
                 messages.success(
-                    request, f'Added size {size.upper()} {product.name} quantity to {bag[item_id]["items_by_size"][size]}'
+                    request, f'Updated size {size.upper()} {product.name} quantity to {bag[item_id]["items_by_size"][size]}'
                 )
             else:
                 bag[item_id]['items_by_size'][size] = quantity
@@ -68,14 +68,16 @@ def adjust_bag(request, item_id):
         if quantity > 0:
             bag[item_id]['items_by_size'][size] = quantity
             messages.success(
-                    request, f'Added size {size.upper()} {product.name} quantity to {bag[item_id]["items_by_size"][size]}'
+                    request, f'Updated size {size.upper()} {product.name} \
+                        quantity to {bag[item_id]["items_by_size"][size]}'
                 )
         else:
             del bag[item_id]['items_by_size'][size]
             if not bag[item_id]['items_by_size']:
                 bag.pop(item_id)
             messages.success(
-                request, f'Removed size {size.upper()} {product.name} from your bag'
+                request, f'Removed size {size.upper()} {product.name} \
+                    from your bag'
             )
     else:
         if quantity > 0:
@@ -94,9 +96,9 @@ def adjust_bag(request, item_id):
 
 def remove_from_bag(request, item_id):
     """ Remove the item frome the shopping bag """
-    product = get_object_or_404(Product, pk=item_id)
 
     try:
+        product = get_object_or_404(Product, pk=item_id)
         size = None
         if 'product_size' in request.POST:
             size = request.POST['product_size']
@@ -119,5 +121,5 @@ def remove_from_bag(request, item_id):
         return HttpResponse(status=200)
 
     except Exception as e:
-        messages.error(request, f'Error removing item: ´{e}')
+        messages.error(request, f'Error removing item: {e}')
         return HttpResponse(status=500)

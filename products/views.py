@@ -26,7 +26,7 @@ def all_products(request):
             if 'direction' in request.GET:
                 direction = request.GET['direction']
                 if direction == 'desc':
-                    sortkey = f'-{sortkey }'
+                    sortkey = f'-{sortkey}'
             products = products.order_by(sortkey)
 
         if 'category' in request.GET:
@@ -34,7 +34,6 @@ def all_products(request):
             products = products.filter(category__name__in=categories)
             categories = Category.objects.filter(name__in=categories)
 
-    if request.GET:
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
