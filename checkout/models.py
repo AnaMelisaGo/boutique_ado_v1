@@ -41,7 +41,7 @@ class Order(models.Model):
         (to generate 32 characters to be used as order number)
         """
         return uuid.uuid4().hex.upper()
-    
+
     def update_total(self):
         """
         Update grand total each time a line item is added,
